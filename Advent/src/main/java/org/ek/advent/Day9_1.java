@@ -1,8 +1,8 @@
 package org.ek.advent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day9_1 {
@@ -125,7 +125,15 @@ public class Day9_1 {
             Pattern p = Pattern.compile("(.*) to (.*) = (.*)");
             Matcher m = p.matcher(s);
             if (m.matches()) {
-                Node node1 = new Node
+                Node node1 = new Node(m.group(1));
+                if (!list.contains(node1)) {
+                    list.add(node1);
+                }
+                Node node2 = new Node(m.group(2));
+                if (!list.contains(node2)) {
+                    list.add(node2);
+                }
+                Edge e = new Edge()
             }
         }
         
