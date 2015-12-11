@@ -21,7 +21,9 @@ public class Day9_1 {
         
         @Override
         public boolean equals(Object that) {
-            return ((that instanceof Node) && (((Node) that).name == name));
+            boolean equals = ((that instanceof Node) && (((Node) that).name.equals(name)));
+            //System.out.println(this.name + " == " + ((Node) that).name + " = " + equals);
+            return equals;
         }
         
         @Override
@@ -75,8 +77,8 @@ public class Day9_1 {
     
     public static int edgeWeight(Node n1, Node n2) {
         for (Edge e : edgeList) {
-            if ( ((e.n1 == n1) && (e.n2 == n2)) || 
-                 ((e.n1 == n2) && (e.n2 == n1))) {
+            if (((e.n1.equals(n1)) && (e.n2.equals(n2))) ||
+                    ((e.n1.equals(n2)) && (e.n2.equals(n1)))) {
                 return e.weight;
             }
         }
@@ -86,11 +88,14 @@ public class Day9_1 {
     public static int findShortest(List<List<Node>> nodeLists) {
         int bestdistance = Integer.MAX_VALUE;
         for (List<Node> nodes : nodeLists) {
+            System.out.println(nodes);
             int distance = 0;
             for (int i = 0; i < nodes.size()-1; i++) {
-                distance += edgeWeight(nodes.get(i), nodes.get(i+1));
+                int edge = edgeWeight(nodes.get(i), nodes.get(i + 1));
+                System.out.print(edge + " ");
+                distance += edge;
             }
-            
+            System.out.println("");
             if (distance < bestdistance) {
                 bestdistance = distance;
             }
@@ -108,10 +113,6 @@ public class Day9_1 {
         Edge e1 = new Edge(n1, n2, 518);
         Edge e2 = new Edge(n1, n3, 464);
         Edge e3 = new Edge(n2, n3, 141);
-        
-        edgeList.add(e1);
-        edgeList.add(e2);
-        edgeList.add(e3);
         
         //System.out.println(insertAtAll(n1, Arrays.asList(n2, n3, n4)));
         List<Node> list = new ArrayList<Node>();
@@ -133,13 +134,18 @@ public class Day9_1 {
                 if (!list.contains(node2)) {
                     list.add(node2);
                 }
-                Edge e = new Edge()
+                Edge e = new Edge(node1, node2, Integer.parseInt(m.group(3)));
+                edgeList.add(e);
             }
         }
-        
+
+        System.out.println(list);
+
         List<List<Node>> orderings = generateOrderings(list);
-        System.out.println(orderings);
-        
+        for (List<Node> l : orderings) {
+            System.out.println(l);
+        }
+
         System.out.println(findShortest(orderings));
     }
 
